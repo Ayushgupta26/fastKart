@@ -1,0 +1,48 @@
+<body class="inventory-body">
+    <div class="login-container">
+        <div class="col-11 container-fluid mt-5">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="card rounded login-form">
+                        <div class="card-header login-header">
+                            <h4 class="mt-1 text-center">Sign In</h4>
+                        </div>
+                        <div class="card-body">
+                            <div *ngIf="submitted && errorBox" class="text-center text-danger">
+                                {{errorMessage}}
+                                </div>
+                            <form [formGroup]="loginForm" class="row g-3 needs-validation mt-4 form-style">
+                                <div class="mb-3 form-group">
+                                    <label class="form-label">User Name</label>
+                                    <input type="text" formControlName="userName" class="form-control input-style"
+                                        placeholder="username">
+                                        <div *ngIf="submitted && this.loginForm.controls.userName.errors">
+                                            <div class="this.loginForm.controls.userName.error.required">
+                                                <span class="text-danger">User Name is required...</span>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="mb-3 form-group">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" formControlName="password" class="form-control input-style"
+                                        placeholder="*******" required>
+                                        <div *ngIf="submitted && this.loginForm.controls.password.errors">
+                                            <div class="this.loginForm.controls.password.error.required">
+                                                <span class="text-danger">Password is required...</span>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-sm sign-in mb-3 float-end" type="submit"
+                                        (click)="submitDetails()">Sign In</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </div>
+</body>

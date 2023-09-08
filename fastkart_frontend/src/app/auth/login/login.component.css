@@ -1,0 +1,35 @@
+.input-style {
+    width: 90%;
+}
+
+.login-form {
+    background-color: #fafbfd;
+}
+
+.form-style {
+    padding-left: 10%;
+}
+
+.sign-in {
+    background-color: #002954;
+    color: white;
+}
+
+.inventory-body {
+    position: fixed;
+    min-width: 100%;
+    background: linear-gradient(to bottom, #ffffff 0%, #002954 100%);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-size: cover;
+}
+.login-container{
+    align-items: center;
+    justify-content: center;
+}
+.login-header {
+    max-height: 4em;
+    background-color: #002954;
+    color: white;
+}

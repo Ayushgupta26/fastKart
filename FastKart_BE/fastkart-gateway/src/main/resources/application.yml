@@ -1,0 +1,36 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: FASTKART-SELLER-SERVICE
+          uri: lb://FASTKART-SELLER-SERVICE
+          predicates:
+            - Path=/seller/**
+          filters:
+            - AuthenticationFilter
+
+        - id: FASTKART-BUYER-SERVICE
+          uri: lb://FASTKART-BUYER-SERVICE
+          predicates:
+            - Path=/buyer/**
+          filters:
+            - AuthenticationFilter
+
+        - id: FASTKART-AUTH-SERVICE
+          uri: lb://FASTKART-AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+
+  application:
+    name: FASTKART-GATEWAY
+
+eureka:
+  client:
+    service-url:
+      defaultZone : http://localhost:8761/eureka/

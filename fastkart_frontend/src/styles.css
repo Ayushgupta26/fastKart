@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+html, body, app-root {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(to bottom, #ffffff 0%, #002954 100%);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-size: cover;
+}
