@@ -1,5 +1,42 @@
+<app-navbar></app-navbar>
 <div class="container">
-    <div *ngIf="products.length===0" class="text-center noProducts">
-        <h5 class="text-danger fw-bold">There are no products to be bought at the moment, try your luck after some time!</h5>
+  <p class="text-success font-weight-bold">WLECOME BUYER</p>
+  <div *ngIf="products.length === 0" class="text-center noProducts">
+    <h5 class="text-danger fw-bold">
+      There are no products to be bought at the moment, try your luck after some
+      time!
+    </h5>
+  </div>
+  <div class="card products rounded-pill mt-4" *ngFor="let product of products| paginate
+  : {
+      itemsPerPage: itemsPerPage,
+      currentPage: page+1,
+      totalItems: totalItems
+    }">
+    <div class="row text-justify">
+      <div class="col-2">
+        <h6 class="ps-5 heading-style">Product Name:</h6>
+        <h5 class="ps-5 project-name">{{product.productName}}</h5>
     </div>
+    <div class="col-3">
+        <h6 class="ps-5 heading-style">Product Category:</h6>
+        <h5 class="ps-5 project-name">{{product.productCategory}}</h5>
+    </div>
+    <div class="col-2">
+        <h6 class="ps-5 heading-style">Max Bid for Product:</h6>
+        <h5 class="ps-5 project-name">{{product.maxBidByBuyer | currency:'INR'}}</h5>
+    </div>
+    <div class="col-3">
+        <h6 class="ps-5 heading-style">Product Added dateTime:</h6>
+        <h5 class="ps-5 project-name">{{product.listedDateTime | date:'short'}}</h5>
+    </div>
+      <div class="col-1">
+        <p (click)="navigateToSpecificProject(product.productId)"
+          aria-hidden="true">get Details</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="products.length!=0" class="mypagination">
+    <pagination-controls (pageChange)="onPageChange($event)" class="float-end mt-4 text-light"></pagination-controls>
+</div>
 </div>

@@ -1,1 +1,56 @@
-<p>buyer-product-details works!</p>
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="mt-1 card product-details ">
+        <div class="card-body">
+          <h4 class="text-center project-title">{{productDetails.productName}}</h4>
+          <div class="mt-4">
+            <p><b class="project-heading">Product Category:</b> {{productDetails.productCategory}}</p>
+            <p class="text-justify"><b class="project-heading">Product Description:</b> 
+              {{productDetails.productDescription}}</p>
+            <p><b class="project-heading">Seller Name:</b> {{productDetails.sellerName}}</p>
+            <p><b class="project-heading">Minimum Bid by Seller:</b> {{productDetails.minBid | currency:'INR'}}</p>
+            <h5 class="pt-3 project-heading">List of Bids applied by Buyers :</h5>
+            <div *ngIf="productDetails.productBids.length===0" class="text-center fw-bold text-warning pt-5">No Buyer applied Bids on this Product.!</div>
+            <table class="table table-striped" *ngIf="productDetails.productBids.length!=0">
+              <thead class="table-heading text-center">
+                <tr>
+                  <th scope="col">Sl.No</th>
+                  <th scope="col">Buyer User Name</th>
+                  <th scope="col">Bid Amount</th>
+                  <th scope="col">Bid DateTime</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                <tr *ngFor="let bids of productDetails.productBids;let i = index">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{bids.buyerUserName}}</td>
+                  <td>{{bids.bidAmount}}</td>
+                  <td>{{bids.bidDateTime | date:'short'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <form [formGroup]="productBidForm" class="row g-3 needs-validation mt-4 form-style">
+            <div class="mb-3 form-group">
+                <label class="form-label">Enter Bid Amount:</label>
+                <input type="number" formControlName="bidAmount" class="form-control input-style"
+                    placeholder="bidAmount">
+                    <div *ngIf="submitted && this.productBidForm.controls.bidAmount.errors">
+                        <div class="this.productBidForm.controls.bidAmount.error.required">
+                            <span class="text-danger">Bid Amount is required...</span>
+                        </div>
+                    </div>
+            </div>
+            <div *ngIf="submitted && errorBox" class="text-center text-danger">
+                {{errorMessage}}
+                </div>
+            <div class="mb-1 float-end">
+                <button class="btn btn-sm addbid" type="submit"
+                    (click)="addBid()">Add Bid</button>
+                <button class="btn btn-sm btn-danger ms-3" type="submit"
+                (click)="navigateToHomePage()">cancel</button>
+            </div>
+        </form>
+        </div>
+      </div>
+</div>
