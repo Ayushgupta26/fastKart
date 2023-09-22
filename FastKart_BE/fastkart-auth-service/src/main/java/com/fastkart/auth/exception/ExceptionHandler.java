@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(value = AuthException.class)
-    protected ResponseEntity<Object> handleAuthException(AuthException ex) {
+    protected ResponseEntity<ErrorResponse> handleAuthException(AuthException ex) {
         ErrorResponse error = new ErrorResponse();
         error.setMessage(ex.getMessage());
-        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(value = MethodArgumentNotValidException.class)
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         List<String> errorList = ex
                 .getBindingResult()
                 .getFieldErrors()
@@ -30,6 +30,6 @@ public class ExceptionHandler {
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         ErrorResponse errorDetails = new ErrorResponse(HttpStatus.BAD_REQUEST, CommonConstants.VALIDATION_ERROR, errorList);
-        return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
+        return new ResponseEntity<ErrorResponse>(errorDetails, errorDetails.getStatus());
     }
 }
