@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable} from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonConstants } from 'src/app/shared/constants/common.constants';
@@ -20,7 +21,7 @@ export class RegisterUserComponent implements OnInit {
   errorMessage:String;
   errorBox:boolean = false;
   user:UserInfo
-  constructor(public activatedRoute: ActivatedRoute, private router:Router,private formBuilder: FormBuilder,private authService: AuthService) { 
+  constructor(public activatedRoute: ActivatedRoute, private router:Router,private formBuilder: FormBuilder,private authService: AuthService, private toasterService: ToastrService) { 
     this.registerForm = this.formBuilder.group({
       userName: ["", Validators.required],
       password: ["", Validators.required],
@@ -50,19 +51,17 @@ export class RegisterUserComponent implements OnInit {
         console.log(this.role)
         if (this.role.toUpperCase() === CommonConstants.SELLER) {
           console.log("seller move")
-          this.router.navigate(['/seller/dashboard']);
+          this.router.navigate(['login']);
         }
         else if (this.role.toUpperCase() === CommonConstants.BUYER) {
           console.log("buyer move")
-          this.router.navigate(['/buyer/dashboard']);
+          this.router.navigate(['login']);
         }
-        //this.toaster.success(NotificationsConstants.LOGIN_SUCCESS);
       },
       err => {
         console.log(err.error.message);
         this.errorBox = true;
         this.errorMessage = err.error.message;
-        //this.toaster.error(NotificationsConstants.LOGIN_FAIL);
       }
     )
   }

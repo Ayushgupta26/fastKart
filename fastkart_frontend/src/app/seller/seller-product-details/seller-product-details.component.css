@@ -1,0 +1,8 @@
+.product-details {
+    border: none;
+}
+.cancelButton {
+    background-color: #002954;
+    color: white;
+    width: 70px;
+}

@@ -1,1 +1,61 @@
-<p>seller-add-product works!</p>
+<app-navbar></app-navbar>
+<div class="container">
+    <form [formGroup]="addProductForm" class="row g-3 needs-validation mt-4 form-style">
+        <div class="mb-3 form-group">
+            <label class="form-label">Product Name:</label>
+            <input type="text" formControlName="productName" class="form-control input-style"
+                placeholder="productName">
+                <div *ngIf="submitted && this.addProductForm.controls.productName.errors">
+                    <div class="this.addProductForm.controls.productName.error.required">
+                        <span class="text-danger">productName is required...</span>
+                    </div>
+                </div>
+        </div>
+        <div class="mb-3 form-group">
+            <label class="form-label">Product Category:</label>
+            <select class="form-control custom-select mb-3" (change)="changeCategory($event)" formControlName="productCategory">
+          <option value="">Choose Category</option>
+          <option *ngFor="let category of categories" [ngValue]="category">
+            {{ category }}
+          </option>
+        </select>
+                <div *ngIf="submitted && this.addProductForm.controls.productCategory.errors">
+                    <div class="this.addProductForm.controls.productCategory.error.required">
+                        <span class="text-danger">productCategory is required...</span>
+                    </div>
+                </div>
+        </div>
+        <div class="mb-3 form-group">
+            <label class="form-label">Product Description:</label>
+            <input type="text" formControlName="productDescription" class="form-control input-style"
+                placeholder="productDescription" required>
+                <div *ngIf="submitted && this.addProductForm.controls.productDescription.errors">
+                    <div class="this.addProductForm.controls.productDescription.error.required">
+                        <span class="text-danger">productDescription is required...</span>
+                    </div>
+                </div>
+        </div>
+        <div class="mb-3 form-group">
+            <label class="form-label">Minimum Bid:</label>
+            <input type="number" formControlName="minBid" class="form-control input-style"
+                placeholder="minBid" required>
+                <div *ngIf="submitted && this.addProductForm.controls.minBid.errors">
+                    <div class="this.addProductForm.controls.minBid.error.required">
+                        <span class="text-danger">productDescription is required...</span>
+                    </div>
+                </div>
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-sm btn-danger mb-3 float-end ms-3" type="submit"
+                (click)="navigateToHomePage()">cancel</button>
+                <button class="btn btn-sm mb-3 addProduct float-end" type="submit"
+                (click)="addProduct()">Add Product</button>
+        </div>
+    </form>
+
+    <form (submit)="onSubmit()" enctype="multipart/form-data">
+        <label class="form-label">Upload CSV file to add products:</label>
+        <input type="file" name="file" (change)="onFileSelected($event)" />
+        <button class="btn btn-sm mb-3 addProduct float-end" type="submit">Upload</button>
+      </form>
+</div>

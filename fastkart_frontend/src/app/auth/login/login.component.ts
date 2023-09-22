@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { CommonConstants } from 'src/app/shared/constants/common.constants';
 import { LoginResponse } from 'src/app/shared/models/LoginResponse';
 
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   errorBox:boolean = false;
 
   constructor(private formBuilder: FormBuilder,private authService: AuthService,
-    private router: Router) {
+    private router: Router, private tokenStorageService: TokenStorageService) {
     this.loginForm = this.formBuilder.group({
       userName: ["", Validators.required],
       password: ["", Validators.required]
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(this.loginForm.value).subscribe(
       (data: LoginResponse) => {
-        sessionStorage.setItem('token', JSON.stringify(data.accessToken));
+        this.tokenStorageService.saveToken(data.accessToken.toString());
+        //sessionStorage.setItem('token', JSON.stringify(data.accessToken));
         let decodedJWT = JSON.parse(window.atob(data.accessToken.split('.')[1]));
         this.role = decodedJWT.role;
         this.authService.isUserLoggedIn = true;

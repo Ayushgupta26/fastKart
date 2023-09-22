@@ -9,18 +9,20 @@ import { UserInfo } from '../shared/models/UserInfo';
   providedIn: 'root'
 })
 export class AuthService {
+  
+  isUserLoggedIn: boolean = false;
+  constructor(private http: HttpClient) { }
+
   save(userInfo: UserInfo) {
     return this.http.post(environment.baseURL + `/auth/register`, userInfo);
   }
-  isUserLoggedIn: boolean = false;
-  constructor(private http: HttpClient) { }
 
   login(authRequest: AuthRequest): Observable<any> {
     return this.http.post(environment.baseURL + `/auth/token`, authRequest);
   }
 
   canActivate() {
-    if (sessionStorage.getItem('userDetails')) {
+    if (sessionStorage.getItem('token')) {
       this.isUserLoggedIn = true;
     }
     return this.isUserLoggedIn;
