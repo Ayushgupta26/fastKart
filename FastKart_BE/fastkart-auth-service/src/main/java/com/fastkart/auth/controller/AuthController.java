@@ -7,7 +7,6 @@ import com.fastkart.auth.models.LoginResponse;
 import com.fastkart.auth.service.impl.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +24,8 @@ public class AuthController {
     }
 
     @PostMapping("/token")
-    public ResponseEntity<LoginResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest) throws InvalidCredentialsException {
+    public ResponseEntity<LoginResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest) {
         LoginResponse loginResponse = authService.generateToken(authRequest);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/validate")
-    public String getToken(@RequestParam("token") String token) {
-        authService.validateToken(token);
-        return "token is valid";
     }
 }

@@ -10,7 +10,6 @@ import com.fastkart.auth.models.AuthResponse;
 import com.fastkart.auth.models.LoginResponse;
 import com.fastkart.auth.repository.UserRespository;
 import com.fastkart.auth.service.AuthService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,15 +54,26 @@ public class AuthServiceImpl implements AuthService {
         LoginResponse loginResponse = new LoginResponse();
         try {
             Optional<UserInfo> userInfo = userRespository.findByUserName(authRequest.getUserName());
+            if(userInfo.isEmpty()){
+                throw new AuthException(CommonConstants.USER_NOT_FOUND_ERROR_MESSAGE);
+            }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
-            loginResponse.setAccessToken(jwtService.generateToken(userInfo.get()));
-        } catch (Exception ex) {
+            userInfo.ifPresent(info -> loginResponse.setAccessToken(jwtService.generateToken(info)));
+        }catch (AuthException ex){
+            throw new AuthException(ex.getMessage());
+        }
+        catch (Exception ex) {
             throw new AuthException(CommonConstants.INVALID_CREDENTIAL);
         }
         return loginResponse;
     }
 
-    public void validateToken(String token) {
-        jwtService.validateToken(token);
+    public String validateToken(String token) {
+        try {
+            jwtService.validateToken(token);
+        } catch (Exception ex) {
+            throw new AuthException("INVALID_TOKEN");
+        }
+        return "VALID_TOKEN";
     }
 }

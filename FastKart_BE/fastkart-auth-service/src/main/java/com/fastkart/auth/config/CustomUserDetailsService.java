@@ -1,6 +1,5 @@
 package com.fastkart.auth.config;
 
-import com.fastkart.auth.config.CustomUserDetails;
 import com.fastkart.auth.entity.UserInfo;
 import com.fastkart.auth.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
