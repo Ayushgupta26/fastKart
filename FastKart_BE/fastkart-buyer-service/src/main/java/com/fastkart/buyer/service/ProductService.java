@@ -1,7 +1,12 @@
 package com.fastkart.buyer.service;
 
-import org.springframework.stereotype.Service;
+import com.fastkart.buyer.model.AddBidRequest;
+import com.fastkart.buyer.model.AddBidResponse;
+import com.fastkart.buyer.model.ProductsResponse;
 
-@Service
-public class ProductService {
+public interface ProductService {
+
+    ProductsResponse getAllProducts(Integer pageNumber, Integer size);
+
+    AddBidResponse addProductToBid(AddBidRequest addBidRequest, String authorization);
 }
