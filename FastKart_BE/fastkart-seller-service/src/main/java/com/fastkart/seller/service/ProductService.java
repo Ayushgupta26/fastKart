@@ -1,16 +1,18 @@
 package com.fastkart.seller.service;
 
-import com.fastkart.seller.entity.Product;
 import com.fastkart.seller.model.AddProductRequest;
 import com.fastkart.seller.model.AddProductResponse;
-
-import java.util.List;
+import com.fastkart.seller.model.ProductDetailsResponse;
+import com.fastkart.seller.model.ProductsResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
 
-    List<Product> getProducts(String authorization);
+    ProductsResponse getProducts(String authorization, Integer pageNumber, Integer size);
 
-    Product getProductByProductId(int productId);
+    ProductDetailsResponse getProductByProductId(int productId);
 
     AddProductResponse addProduct(AddProductRequest addProductRequest, String authorization);
+
+    AddProductResponse processProductCSV(MultipartFile file, String authorization) throws Exception;
 }
