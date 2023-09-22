@@ -1,15 +1,17 @@
 package com.fastkart.seller.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name="products")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -35,6 +37,13 @@ public class Product {
     @Column(name = "seller_name")
     private String sellerName;
 
-    @OneToMany(mappedBy = "product")
+    @OrderColumn(name = "listed_date_time")
+    private LocalDateTime listedDateTime;
+
+    @Transient
+    private int maxBidByBuyer;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private List<ProductBid> productBids = new ArrayList<>();
 }

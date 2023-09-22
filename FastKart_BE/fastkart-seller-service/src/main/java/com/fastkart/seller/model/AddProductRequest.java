@@ -1,10 +1,11 @@
 package com.fastkart.seller.model;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +22,5 @@ public class AddProductRequest {
     private String productDescription;
 
     @Min(10)
-    @NotBlank(message = "Minimum Bid is mandatory")
     private int minBid;
 }
